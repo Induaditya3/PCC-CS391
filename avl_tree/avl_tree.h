@@ -4,7 +4,7 @@
 // data structure for storing the nodes of the avl tree
 typedef struct node{
     int h; // height of the node
-    int data; // data to be stored - it should be comaparable
+    int data; // data to be stored - it should be comparable
     struct node* parent; // parent node of current node
     struct node* left; // left child of current node
     struct node* right; // right child of current node
@@ -26,7 +26,7 @@ avl_t* createAvl();
 // val : whether insertion or deletion happened- -1 means deletion and 1 means insertion
 int max_height(node_t *left,node_t *right,int which_side);
 // recursive function for height of the node
-// for testiong purpose
+// for testing purpose
 int height_node(node_t *node);
 
 // inserting into avl 
