@@ -75,7 +75,7 @@ void printPostorder(node_t *node){
 }
 // delete whole bst
 void free_node(node_t *node){
-    // base case- both node is a leaf
+    // base case- current node is a leaf
     if (node->left == NULL && node->right == NULL)
         free(node);
     
@@ -137,19 +137,21 @@ void deleteNode(node_t *node,int data){
         return;
     }
     // node to be deleted is leaf node
+    
     // required node is in the left subtree
     if (node->left != NULL && node->left->data == data && node->left->left == NULL && node->left->right == NULL){
-        // free the node containing the required data and set the parent node 's left to nulll
+        // free the node containing the required data and set the parent node 's left to null
         free(node->left);
         node->left = NULL;
     }
     // required node is in the right node
     else if (node->right != NULL && node->right->data == data && node->right->left == NULL && node->right->right == NULL){
-        // free the node containing the required data and set the parent node 's left to nulll
+        // free the node containing the required data and set the parent node 's right to null
         free(node->right);
         node->right = NULL;
     }
     // node to be deleted has left subtree only
+    
     // required node is in the left 
     else if (node->left != NULL && node->left->data == data &&  node->left->left != NULL && node->left->right == NULL){
         node_t *deleted = node->left;
@@ -165,6 +167,7 @@ void deleteNode(node_t *node,int data){
         free(deleted);
     }
     // node to be deleted has right subtree only
+    
     // required node is in the left 
     else if (node->left != NULL && node->left->data == data &&  node->left->left == NULL && node->left->right != NULL){
         node_t *deleted = node->left;
