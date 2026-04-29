@@ -5,14 +5,18 @@
 typedef struct {
   int weight;
   int price;
-  int ratio; // price per weight
+  float ratio; // price per weight
+  int idx; // original index of the item
 }Item;
 
 // cmp function for qsort function of stdlib
-int cmp(const void *a, void *b){
+// which will compare items based on price per weight
+int cmp(const void *a, const void *b){
   Item* item = (Item*)a;
   Item* item2 = (Item*)b;
-  return (int) (item->ratio-item2->ratio);
+  if (item2->ratio > item->ratio) return 1;
+  else if (item2->ratio < item->ratio) return -1;
+  return 0;
 }
 
 
@@ -26,7 +30,8 @@ int main(){
     items[i] = (Item){
       .weight = weights[i],
       .price = prices[i],
-      .ratio = weights[i]/prices[i]
+      .ratio = (float)prices[i]/weights[i],
+      .idx = i
     };
   }
 
@@ -34,5 +39,21 @@ int main(){
   const int CAPACITY = 10;
 
   // sort the items based on price per weight
+  qsort(items, NUM_ITEMS, sizeof(Item), cmp);
+
+  // initialize arr for tracking which items is taken
+  int arr[NUM_ITEMS];
+  // fill the sack with items having maximum price per weight first if possible
+  int capacity = CAPACITY;
+  int total_val = 0;
+  for (int i = 0; i < NUM_ITEMS; i++){
+    if (capacity < items[i].weight) continue;
+    capacity -= items[i].weight;
+    arr[i] = 1;
+    total_val += items[i].price;
+    printf("Item%d ",items[i].idx);
+  }
+
   
+  return 0;
 }
