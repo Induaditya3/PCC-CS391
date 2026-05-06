@@ -3,8 +3,7 @@
 
 
 typedef struct {
-  int weight;
-  int price;
+  int weight, price;
   float ratio; // price per weight
   int idx; // original index of the item
 }Item;
@@ -47,14 +46,19 @@ int main(){
   int capacity = CAPACITY;
   float total_val = 0;
   for (int i = 0; i < NUM_ITEMS; i++){
-    if (capacity < items[i].weight) continue;
+    if (capacity < items[i].weight) {
+      arr[i] = (float)capacity/items[i].weight;
+      total_val += items[i].price * arr[i];
+      printf("Item%d ",items[i].idx);
+      capacity = 0;
+      break;
+    }
     capacity -= items[i].weight;
     arr[i] = 1;
     total_val += items[i].price;
     printf("Item%d ",items[i].idx);
   }
 
-  
   printf("Total profit: %f",total_val);
   return 0;
 }
