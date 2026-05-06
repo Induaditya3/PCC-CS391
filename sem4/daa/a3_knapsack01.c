@@ -55,6 +55,6 @@ int main(){
   }
 
   
-  printf("Total profit: %f",total_val);
+  printf("\nTotal profit: %f",total_val);
   return 0;
 }

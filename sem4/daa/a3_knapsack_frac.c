@@ -41,7 +41,7 @@ int main(){
   qsort(items, NUM_ITEMS, sizeof(Item), cmp);
 
   // initialize arr for tracking which items is taken
-  int arr[NUM_ITEMS];
+  float arr[NUM_ITEMS];
   // fill the sack with items having maximum price per weight first if possible
   int capacity = CAPACITY;
   float total_val = 0;
@@ -49,16 +49,16 @@ int main(){
     if (capacity < items[i].weight) {
       arr[i] = (float)capacity/items[i].weight;
       total_val += items[i].price * arr[i];
-      printf("Item%d ",items[i].idx);
       capacity = 0;
+      printf("Item%d was taken %0.2f%% ",items[i].idx, arr[i]*100);
       break;
     }
     capacity -= items[i].weight;
     arr[i] = 1;
     total_val += items[i].price;
-    printf("Item%d ",items[i].idx);
+    printf("Item%d was taken %0.2f%% \n",items[i].idx, arr[i]*100);
   }
 
-  printf("Total profit: %f",total_val);
+  printf("\nTotal profit: %f",total_val);
   return 0;
 }
