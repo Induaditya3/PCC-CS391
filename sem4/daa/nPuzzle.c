@@ -1,8 +1,12 @@
+// branch and bound strategy used for solving n Puzzle problem
+// it can solve max of 15 puzzle problem, i.e. it supports 4x4 tile board
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX_LENGTH 1000
 
 typedef struct{
+  int64_t state; // hashed state
   char act;
   int val;
 }act_val;
@@ -24,13 +28,15 @@ char opposite(char act){
   return ' ';
 }
 
+// misplaced tile heuristic function
 int value(int n, int board[n][n]){
   int sum = 0;
   int incorrect = 0;
   for (int i = 0; i < n; i++){
     for (int j = 0; j < n; j++){
       sum++;
-      if (i+j == 2*n-2 && board[i][j] == 0) break;
+      // bottom right cell must be zero
+      if (i == n-1 && i == n-1 && board[i][j] == 0) break; 
       if (sum != board[i][j])
         incorrect++;
     }
@@ -38,6 +44,11 @@ int value(int n, int board[n][n]){
   return incorrect;
 }
 
+// manhatten distance heuristic function
+int value2(int n, int board[n][n]){
+  int sum = 0;
+  return 0;
+}
 // moves the blank cell and modifies i, j to reflect new position of blank cell
 // return 0 if move made, -1 if illegal move is made
 int move(int n, int board[n][n], char act, int* i, int* j){
@@ -103,12 +114,15 @@ void solve(int n, int board[n][n], char prev_act, int i, int j){
 }
 
 int main(){
-  const int n = 2;
+  enum {n = 4};
   
-  int board[n][n]; 
+  int board[n][n] = {
+    {3, 5, 4, 10},
+    {13, 7, 12, 1},
+    {0, 15, 6, 11},
+    {8, 9, 14, 2}
+  };
   
-  board[0][0] = 2; board[0][1] = 0;
-  board[1][0] = 1; board[1][1] = 3;
-  solve(n, board, ' ', 0, 1);
+  solve(n, board, ' ', 2, 0);
   return 0;
 }
