@@ -21,7 +21,7 @@ def lcs(str1, str2):
     lcs_str = []
     i = rows-1
     j = cols-1
-    while i > 0 or j > 0:
+    while i > 0 and j > 0:
         # if current char match then go diagonally upward
         if str1[i-1] == str2[j-1]:
             lcs_str.append(str1[i-1])
